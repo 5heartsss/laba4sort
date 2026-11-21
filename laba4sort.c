@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <time.h>
 
-/* массивы делаем глобальными, чтобы не возиться с malloc */
-int a[100000];    /* исходный массив */
-int b[100000];    /* копия, которую сортируем */
-int tmp[100000];  /* вспомогательный массив для слияния */
 
-/* копируем массив a в массив b */
+int a[100000];
+int b[100000];
+int tmp[100000]; 
+
+
 void copyArray(int n) {
     int i;
     for (i = 0; i < n; i++) {
@@ -15,7 +15,6 @@ void copyArray(int n) {
     }
 }
 
-/* сортировка пузырьком */
 void bubbleSort(int n) {
     int i, j, t;
     for (i = 0; i < n - 1; i++) {
@@ -29,7 +28,6 @@ void bubbleSort(int n) {
     }
 }
 
-/* сортировка вставками */
 void insertionSort(int n) {
     int i, j, x;
     for (i = 1; i < n; i++) {
@@ -43,7 +41,6 @@ void insertionSort(int n) {
     }
 }
 
-/* слияние двух отсортированных частей: [left..mid] и [mid+1..right] */
 void merge(int left, int mid, int right) {
     int i = left;
     int j = mid + 1;
@@ -74,7 +71,6 @@ void merge(int left, int mid, int right) {
     }
 }
 
-/* сортировка слиянием (рекурсия) */
 void mergeSort(int left, int right) {
     int mid;
     if (left < right) {
@@ -98,26 +94,22 @@ int main() {
     for (s = 0; s < 4; s++) {
         n = sizes[s];
 
-        /* заполняем массив случайными числами */
         for (i = 0; i < n; i++) {
             a[i] = rand();
         }
 
-        /* пузырёк */
         copyArray(n);
         start = clock();
         bubbleSort(n);
         end = clock();
         t1 = (double)(end - start) / CLOCKS_PER_SEC;
 
-        /* вставки */
         copyArray(n);
         start = clock();
         insertionSort(n);
         end = clock();
         t2 = (double)(end - start) / CLOCKS_PER_SEC;
 
-        /* слияние */
         copyArray(n);
         start = clock();
         mergeSort(0, n - 1);
